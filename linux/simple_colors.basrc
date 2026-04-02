@@ -1,0 +1,27 @@
+# Simple and colorful.
+
+# Colors
+esc="\033"
+end="${esc}[0m"
+
+# Startup
+start_date=`date +"%d/%m/%Y %H:%M:%S"`
+color_date="${esc}[1;34m"
+
+fastfetch
+printf "${color_date} ¤ Date: ${start_date}${end} \n"
+
+# Shell prompt
+c_all="${esc}[0;32m"
+c_branch="${esc}[0;33m"
+c_user="${esc}[0;34m"
+c_path="${esc}[1;34m"
+
+# Function to get the current git branch
+function parse_git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+# Add the git branch to the prompt
+export PS1="\[${c_all}\]╭──(\[${c_user}\]\u@\h\[${c_all}\])─[\[${c_path}\]\w\[${c_all}\]]\[${c_branch}\]$(parse_git_branch) \[${end}\]
+\[${c_all}\]╰─\$ \[${end}\]"
+
